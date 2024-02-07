@@ -1,10 +1,31 @@
 import React from 'react'
+import { addTodo } from '../../features/todo/todoSlicer'
+import { useDispatch } from 'react-redux'
 
 export const Navbar = () => {
+   const dispatch = useDispatch()
+
+   function generateRandomId(length) {
+      const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let result = '';
+
+      for (let i = 0; i < length; i++) {
+         const randomIndex = Math.floor(Math.random() * charset.length);
+         result += charset[randomIndex];
+      }
+
+      return result;
+   }
+
    return (
       <div className='flex bg-base-300 w-full justify-between p-2 items-center'>
          <div className='w-1/3'>
-            <button className='btn btn-secondary btn-outline rounded-full'><i class="bi bi-plus text-lg"></i></button>
+            <button
+               className='btn btn-secondary btn-outline rounded-full'
+               onClick={() => {
+                  dispatch(addTodo({ id: generateRandomId(16), content: `Task ${generateRandomId(6)}`}))
+               }}
+            ><i className="bi bi-plus text-lg"></i></button>
          </div>
          <div className='w-1/3 flex justify-center'>
             <button className='btn btn-ghost'>To do or not to do?</button>
